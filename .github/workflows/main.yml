@@ -2,6 +2,8 @@ name: Actions 😎
 
 on: [push, pull_request]
 
+permissions: read-all|write-all # temp | restrict permissions later on
+
 jobs:
   buildAndTestForLinuxBasedPlatforms:
     name: Build for ${{ matrix.targetPlatform }}
