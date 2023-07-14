@@ -1,6 +1,11 @@
 name: Test and Build Versions
 
-on: [push, pull_request]
+on: 
+  pull_request:
+  push:
+    branches:
+      - 'main'
+      - 'release/**'
 
 permissions: write-all # temp | restrict permissions later on
 
