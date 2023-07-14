@@ -2,7 +2,7 @@ name: Actions 😎
 
 on: [push, pull_request]
 
-permissions: read-all|write-all # temp | restrict permissions later on
+permissions: write-all # temp | restrict permissions later on
 
 jobs:
   buildAndTestForLinuxBasedPlatforms:
