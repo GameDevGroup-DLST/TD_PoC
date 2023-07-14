@@ -1,4 +1,4 @@
-name: Actions 😎
+name: Test and Build Versions
 
 on: [push, pull_request]
 
