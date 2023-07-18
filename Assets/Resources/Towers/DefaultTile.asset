@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba448691363571043b05d23746e5bf7c, type: 3}
-  m_Name: Caravan
+  m_Name: DefaultTile
   m_EditorClassIdentifier: 
-  nameString: Caravan
-  prefab: {fileID: 7455039699082266831, guid: 4c2ae79fa00c0eb4c8845209db5682c9, type: 3}
-  visual: {fileID: 7455039699082266831, guid: 9398d78f5c1d8e44eb7e3445be4acc66, type: 3}
+  nameString: Empty
+  prefab: {fileID: 7455039699082266831, guid: 5c212d16d83b19d43a21c9f730c59265, type: 3}
+  visual: {fileID: 7455039699082266831, guid: 5c212d16d83b19d43a21c9f730c59265, type: 3}
   width: 1
   height: 1

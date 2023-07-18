@@ -923,9 +923,10 @@ MonoBehaviour:
   availableTowers:
   - {fileID: 11400000, guid: b528c945b3529304382b9ce790ec14f7, type: 2}
   caravanTowerSO: {fileID: 11400000, guid: 8a164069d7899254ba58712ec105200a, type: 2}
-  debug: 1
-  gridWidth: 20
-  gridHeight: 20
+  defaultTileSO: {fileID: 11400000, guid: d517728d6ca7def4fa473047a6ca4bdb, type: 2}
+  debug: 0
+  gridWidth: 50
+  gridHeight: 50
   cellSize: 10
   mouseColliderLayerMask:
     serializedVersion: 2

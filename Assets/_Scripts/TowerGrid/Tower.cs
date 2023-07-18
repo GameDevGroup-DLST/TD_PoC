@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    [SerializeField] bool _canBeOverridden;
+    [SerializeField] bool _canBeDestroyed = true;
     private TowerTypeScriptableObject _towerTypeSO;
     private Vector2Int _origin;
     private TowerTypeScriptableObject.Dir _dir;
@@ -17,18 +20,18 @@ public class Tower : MonoBehaviour
         tower._origin = origin;
         tower._dir = dir;
 
+        Vector2Int pos = towerTypeSO.GetGridPositionList(origin, dir).First();
+        tower.name = $"{tower.GetTowerName()} ({pos.x},{pos.y})";
+
         return tower;
     }
 
-    public string GetTowerName() {
-        return _towerTypeSO.name;
-    }
+    public string GetTowerName() => _towerTypeSO.name;
 
-    public List<Vector2Int> GetGridPositionList() {
-        return _towerTypeSO.GetGridPositionList(_origin, _dir);
-    }
+    public bool CanBeOverridden() => _canBeOverridden;
+    public bool CanBeDestroyed() => _canBeDestroyed;
 
-    public void DestroySelf() {
-        Destroy(gameObject);
-    }
+    public List<Vector2Int> GetGridPositionList() =>  _towerTypeSO.GetGridPositionList(_origin, _dir);
+
+    public void DestroySelf() => Destroy(gameObject);
 }

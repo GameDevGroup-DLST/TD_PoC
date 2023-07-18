@@ -6,8 +6,6 @@ using UnityEngine;
 public class TowerGhost : MonoBehaviour
 {
     private Transform _visual;
-    private TowerTypeScriptableObject _towerTypeSO;
-
     [SerializeField] private Material _previewMaterial;
 
     // Start is called before the first frame update
