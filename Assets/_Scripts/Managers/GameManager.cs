@@ -12,7 +12,7 @@ public class GameManager : StaticInstance<GameManager> {
     public GameState State { get; private set; }
 
     // Kick the game off with the first state
-    void Start() => ChangeState(GameState.Gameplay);
+    void Start() => ChangeState(GameState.LevelSelect);
 
     public void ChangeState(GameState newState) {
         if (newState == State) return;
@@ -21,10 +21,13 @@ public class GameManager : StaticInstance<GameManager> {
 
         State = newState;
         switch (newState) {
+            case GameState.LevelSelect:
+                HandleLevelSelect();
+                break;
             case GameState.Gameplay:
                 HandleChangeToGameplay();
                 break;
-            case GameState.Cutscene:
+            case GameState.Cutscene: // May or may not be used
                 HandleCutscene();
                 break;
             case GameState.Pause:
@@ -48,20 +51,23 @@ public class GameManager : StaticInstance<GameManager> {
     }
     
     private void HandleCutscene() {
-        
+        throw new NotImplementedException();
+    }
+
+    private void HandleLevelSelect() {
+        // Display Level Select Screen
     }
 
     private void PauseGame() {
-        
+        // Display Pause Screen
     }
-    
-    
 }
 
 [Serializable]
 public enum GameState {
     Gameplay,
     Cutscene,
+    LevelSelect,
     Pause,
     GameOver,
     Win,

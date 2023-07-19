@@ -32,7 +32,7 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
@@ -714,6 +714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1246104067}
   - component: {fileID: 1246104068}
+  - component: {fileID: 1246104070}
   - component: {fileID: 1246104069}
   m_Layer: 0
   m_Name: Game Manager
@@ -759,6 +760,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daf024a243ba8924eb6bcd28a398ab79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1246104070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246104066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a7fe27481745f4ea511ea5f87f7fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1267300342
