@@ -17,6 +17,7 @@ public class GameManager : StaticInstance<GameManager> {
     public void ChangeState(GameState newState) {
         if (newState == State) return;
         
+        GameState prevState = State;
         OnBeforeStateChanged?.Invoke(newState);
 
         State = newState;
@@ -37,17 +38,21 @@ public class GameManager : StaticInstance<GameManager> {
                 break;
             case GameState.Win:
                 break;
+            case GameState.None:
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
 
         OnAfterStateChanged?.Invoke(newState);
         
-        Debug.Log($"New state: {newState}");
+        Debug.Log($"New State: {newState} from {prevState}");
     }
 
     private void HandleChangeToGameplay() {
-
+        if(PlayPhaseManager.Instance.Phase == PlayPhase.None) {
+            PlayPhaseManager.Instance.ChangePhase(PlayPhase.Planning);
+        }
     }
     
     private void HandleCutscene() {
@@ -56,6 +61,8 @@ public class GameManager : StaticInstance<GameManager> {
 
     private void HandleLevelSelect() {
         // Display Level Select Screen
+
+        ChangeState(GameState.Gameplay);
     }
 
     private void PauseGame() {
@@ -65,9 +72,10 @@ public class GameManager : StaticInstance<GameManager> {
 
 [Serializable]
 public enum GameState {
+    None,
+    LevelSelect,
     Gameplay,
     Cutscene,
-    LevelSelect,
     Pause,
     GameOver,
     Win,

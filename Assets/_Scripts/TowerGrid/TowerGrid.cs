@@ -20,7 +20,7 @@ public class TowerGrid : Singleton<TowerGrid>
     [SerializeField] private float cellSize = 10f;
     [SerializeField] private LayerMask mouseColliderLayerMask;
 
-    public delegate void TowerChangeAction();
+    public delegate void TowerChangeAction(TowerTypeScriptableObject newTower);
     public static event TowerChangeAction OnTowerChanged;
 
     override protected void Awake() {
@@ -40,28 +40,32 @@ public class TowerGrid : Singleton<TowerGrid>
 
     private void Start() {
         InitializeGrid();
+        OnTowerChanged?.Invoke(currentlySelectedTowerTypeSO);
     }
 
     void Update()
     {
+        if(GameManager.Instance.State != GameState.Gameplay || PlayPhaseManager.Instance.Phase != PlayPhase.Planning) return;
+
+
         if (Input.GetMouseButtonDown(0)) {
             CreateTower(currentlySelectedTowerTypeSO);
         }
         if (Input.GetMouseButtonDown(1)) {
             DestroyTower();
         }
-        if(Input.GetKeyDown(KeyCode.UpArrow)) {
+        if(Input.GetKeyDown(KeyCode.Q)) {
             activeIndex = (activeIndex + 1) % availableTowers.Length;
             currentlySelectedTowerTypeSO = availableTowers[activeIndex];
 
-            OnTowerChanged?.Invoke();
-        } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            OnTowerChanged?.Invoke(currentlySelectedTowerTypeSO);
+        } else if (Input.GetKeyDown(KeyCode.E)) {
             activeIndex = activeIndex - 1;
 
             activeIndex = activeIndex >= 0 ? activeIndex : (availableTowers.Length - 1);
             currentlySelectedTowerTypeSO = availableTowers[activeIndex];
 
-            OnTowerChanged?.Invoke();
+            OnTowerChanged?.Invoke(currentlySelectedTowerTypeSO);
         }
     }
 

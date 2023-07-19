@@ -16,8 +16,13 @@ public class TowerGhost : MonoBehaviour
         TowerGrid.OnTowerChanged += TowerChangeAction;
     }
 
-    private void TowerChangeAction() {
+    private void TowerChangeAction(TowerTypeScriptableObject newTower) {
         RefreshVisual();
+    }
+
+    private void Update() {
+        _visual.gameObject.SetActive(GameManager.Instance.State == GameState.Gameplay && PlayPhaseManager.Instance.Phase == PlayPhase.Planning); // This is ugly. Clean this up to use Events
+        
     }
 
     void LateUpdate()
