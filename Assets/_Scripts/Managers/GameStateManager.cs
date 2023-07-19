@@ -35,6 +35,9 @@ public class GameStateManager : StaticInstance<GameStateManager>
             case GameplayState.Defeat:
                 HandleDefeat();
                 break;
+            case GameplayState.None:
+                // Maybe we can just clean up everything here
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
