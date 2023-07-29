@@ -62,7 +62,7 @@ public class GameManager : StaticInstance<GameManager> {
     private void HandleLevelSelect() {
         // Display Level Select Screen
 
-        ChangeState(GameState.Gameplay);
+        // ChangeState(GameState.Gameplay);
     }
 
     private void PauseGame() {

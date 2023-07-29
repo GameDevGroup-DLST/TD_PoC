@@ -77,8 +77,8 @@ public class PlayPhaseManager : StaticInstance<PlayPhaseManager>
         // Show Results
 
 
-        ChangePhase(PlayPhase.None);
-        GameManager.Instance.ChangeState(GameState.LevelSelect);
+        // ChangePhase(PlayPhase.None);
+        // GameManager.Instance.ChangeState(GameState.LevelSelect);
     }
 
     private void HandleDefeat() {
