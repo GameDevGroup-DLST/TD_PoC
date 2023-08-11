@@ -70,20 +70,29 @@ public class TowerGrid : Singleton<TowerGrid>
     }
 
     private void InitializeGrid() {
-        for(int x = 0; x < gridWidth; x++) {
-            for(int z = 0; z < gridHeight; z++) {
-                CreateTower(defaultTileSO, x, z);
+        int midX = gridHeight/2;
+        int midZ = gridWidth/2;
+
+        for(int x = midX - 5; x <= midX + 5; x++) {
+            for(int z = midZ - 5; z <= midZ + 5; z++) {
+                if(x == midX && z == midZ) {
+                    continue;
+                }
+
+                if(x%2 == 1 && z%2 == 1) {
+                    CreateTower(defaultTileSO, x, z);
+                }
             }
         }
 
         CreateTower(caravanTowerSO, gridHeight/2, gridWidth/2);
         Vector3 caravanWorldPosition = grid.GetWorldPosition(gridHeight/2, gridWidth/2);
-        
+
         Camera.main.transform.position = Camera.main.transform.position + new Vector3(caravanWorldPosition.x - 60f, 0, caravanWorldPosition.z - 60f);
     }
 
     private void CreateTower(TowerTypeScriptableObject towerType) {
-        Vector3 mousePosition = GetMouseWorldPosition();
+        Vector3 mousePosition = GetMouseWorldPosition(); // Change this to be a ray cast from the camera to the world position
         grid.GetXZ(mousePosition, out int x, out int z);
 
         List<Vector2Int> gridPositionList = GetGridPositionListAtMousePosition();
@@ -114,7 +123,7 @@ public class TowerGrid : Singleton<TowerGrid>
     private void CreateTower(TowerTypeScriptableObject towerType, int x, int z) {
         List<Vector2Int> gridPositionList = currentlySelectedTowerTypeSO.GetGridPositionList(new Vector2Int(x,z), _dir);
 
-        if(CanBuildInArea(gridPositionList)) {
+        if(CanBuildInArea(gridPositionList, true)) {
             Vector2Int rotationOffset = towerType.GetRotationOffset(_dir);
             Vector3 towerObjectWorldPosition = grid.GetWorldPosition(x, z) +
                 new Vector3(rotationOffset.x, 0, rotationOffset.y) * grid.GetCellSize();
@@ -187,8 +196,12 @@ public class TowerGrid : Singleton<TowerGrid>
         );
     }
 
-    private bool CanBuildInArea(List<Vector2Int> gridPositionList) {
+    private bool CanBuildInArea(List<Vector2Int> gridPositionList, bool allowNull = false) {
         foreach(Vector2Int gridPosition in gridPositionList) {
+            if(!allowNull && grid.GetGridObject(gridPosition.x, gridPosition.y).GetTower() == null) {
+                return false;
+            }
+            
             if (!grid.GetGridObject(gridPosition.x, gridPosition.y).CanBuild()) {
                 return false;
             }
