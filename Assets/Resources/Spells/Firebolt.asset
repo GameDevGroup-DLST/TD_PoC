@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56562beab6fe11e418bc46ad410be780, type: 3}
+  m_Name: Firebolt
+  m_EditorClassIdentifier: 
+  SpellName: Firebolt
+  Projectile: {fileID: 9127311818351621454, guid: cfe45fd91e142af42b59aac6ddd1fe52, type: 3}
+  DamageAmount: 20
+  ManaCost: 10
+  SpellRadius: 1
+  MoveSpeed: 35
+  MovementType: 1
+  Period: 5
+  xMovement:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  yMovement:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  DestroyOnHit: 1
+  Lifetime: 4
