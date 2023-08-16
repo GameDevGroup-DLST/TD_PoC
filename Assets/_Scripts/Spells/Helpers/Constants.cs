@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public enum MovementType {
@@ -7,4 +6,22 @@ public enum MovementType {
     Linear,
     Sinusoidal,
     Custom,
+}
+
+[Serializable]
+public enum TargetType {
+    None,
+    Self,
+    Point,
+    Targeted
+}
+
+[Serializable]
+public enum OnKillEffect {
+    None,
+}
+
+[Serializable]
+public enum OnHitEffect {
+    None,
 }

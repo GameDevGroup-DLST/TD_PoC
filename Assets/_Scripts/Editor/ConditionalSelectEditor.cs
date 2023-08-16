@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEditor.AnimatedValues;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [CustomEditor(typeof(SpellScriptableObject))]
@@ -12,15 +13,26 @@ public class ConditionalSelectEditor : Editor
 		// Unity provides a target when overriding the inspector look, and it has always the same type we declare on CustmoEditor(typeof()) on top
 		spellSO = (SpellScriptableObject)target;
 
+        EditorGUILayout.LabelField("Spell Metadata", EditorStyles.boldLabel);
         spellSO.SpellName = EditorGUILayout.TextField("Spell Name", spellSO.SpellName);
+        spellSO.SpellThumbnail = (Sprite)EditorGUILayout.ObjectField("Spell Thumbnail", spellSO.SpellThumbnail, typeof(Sprite));
+
         spellSO.Projectile = (Spell)EditorGUILayout.ObjectField("Projectile Prefab", spellSO.Projectile, typeof(Spell));
+        spellSO.ManaCost = EditorGUILayout.FloatField("Mana Cost", spellSO.ManaCost);
+        spellSO.CastDelay = EditorGUILayout.FloatField("Cast Delay", spellSO.CastDelay);
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Spell Details", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Damage", EditorStyles.boldLabel);
 
         spellSO.DamageAmount = EditorGUILayout.FloatField("Damage Amount", spellSO.DamageAmount);
-        spellSO.ManaCost = EditorGUILayout.FloatField("Mana Cost", spellSO.ManaCost);
         spellSO.SpellRadius = EditorGUILayout.FloatField("Spell Radius", spellSO.SpellRadius);
+        EditorGUI.BeginChangeCheck();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("OnHitEffects"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("OnKillEffects"));
+        if (EditorGUI.EndChangeCheck())
+        {
+            serializedObject.ApplyModifiedProperties();
+        }
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Movement Options", EditorStyles.boldLabel);
@@ -58,9 +70,9 @@ public class ConditionalSelectEditor : Editor
         spellSO.DestroyOnHit = EditorGUILayout.Toggle("Destroy On Hit", spellSO.DestroyOnHit);
         spellSO.Lifetime = EditorGUILayout.FloatField("Lifetime", spellSO.Lifetime);
 	
-		//IF something has changed, we let unity know, so it makes us save the scene, and therefore, the smart button values will be saved
-		if(GUI.changed)
-			EditorUtility.SetDirty(target);
+		if(GUI.changed) {
+            EditorUtility.SetDirty(target);
+        }
 	}
 
 }

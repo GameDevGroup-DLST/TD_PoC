@@ -6,32 +6,36 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Spell", menuName = "ScriptableObjects/Spell", order = 0)]
 public class SpellScriptableObject : ScriptableObject {
 
+    // METADATA
     public string SpellName;
     public Spell Projectile;
-    // Damage Types / Elements
-    public float DamageAmount = 10f;
-    public float ManaCost = 5f;
-    public float SpellRadius = .5f;
+    public Sprite SpellThumbnail; // To be implemented
 
-    [Header("Movement")]
+    public float ManaCost = 5f; // To be implemented
+    public float CastDelay = 3f; // To be implemented
+    public TargetType CastTarget = TargetType.None; // To be implemented
+
+    // DAMAGE SETINGS -------------------------------------
+    public float DamageAmount = 10f;
+    public float SpellRadius = .5f;
+    public List<OnHitEffect> OnHitEffects = new List<OnHitEffect>(); // To be implemented
+    public List<OnKillEffect> OnKillEffects = new List<OnKillEffect>(); // To be implemented
+
+    // MOVEMENT -------------------------------------------
     public float MoveSpeed = 15f;
     public MovementType MovementType = MovementType.None;
 
-    [Header("Sinusoidal Settings")]
-    [Range(1,20)]
+    // SINUSOIDAL ------------------
     public float Period = 5f;
+    // ---- END SINUSOIDAL ---------
 
-    [Header("Custom Movement")]
+    // CUSTOM ----------------------
     public AnimationCurve xMovement = new AnimationCurve();
     public AnimationCurve yMovement = new AnimationCurve();
+    // -------- END CUSTOM ---------
+    // ----------------------------- END MOVEMENT ---------
 
-
-    [Header("Lifetime")]
+    // LIFETIME -------------------------------------------
     public bool DestroyOnHit = true;
     public float Lifetime = 2f;
-
-    // Status Effects
-    // Thumbnail
-    // Cast Delay
-    // Projectile Motion
 }
