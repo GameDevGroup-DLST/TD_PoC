@@ -52,7 +52,7 @@ public class Spell : MonoBehaviour
 
     private void Update()
     {
-        handleMovement?.Invoke(spellToCast, this);     
+        handleMovement?.Invoke(spellToCast, this);
     }
 
     private void OnTriggerEnter(Collider other) {

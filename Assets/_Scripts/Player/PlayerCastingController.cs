@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCastingController : MonoBehaviour
 {
+    public int activeSpellIndex = 0;
+
     [SerializeField] private List<SpellScriptableObject> spells = new List<SpellScriptableObject>(3);
     [SerializeField] private Transform castPoint;
 
@@ -19,7 +21,7 @@ public class PlayerCastingController : MonoBehaviour
 
     void CastSpell() {
         // Handle different casting points Self, Target, Point
-        Spell spellInstance = Instantiate(spells[0].Projectile, castPoint.position, castPoint.rotation);
-        spellInstance.Initialize(spells[0], this.gameObject);
+        Spell spellInstance = Instantiate(spells[activeSpellIndex].Projectile, castPoint.position, castPoint.rotation);
+        spellInstance.Initialize(spells[activeSpellIndex], this.gameObject);
     }
 }

@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56562beab6fe11e418bc46ad410be780, type: 3}
-  m_Name: Test
+  m_Name: Spinny
   m_EditorClassIdentifier: 
   SpellName: Test
   Projectile: {fileID: 9127311818351621454, guid: df38249e507d34846ae7c8f4dc799458, type: 3}
-  DamageAmount: 10
+  SpellThumbnail: {fileID: 0}
   ManaCost: 5
+  CastDelay: 3
+  CastTarget: 0
+  DamageAmount: 10
   SpellRadius: 0.5
+  OnHitEffects: 
+  OnKillEffects: 
   MoveSpeed: 50
   MovementType: 3
   Period: 5
@@ -24,22 +29,31 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 33.77806
-      outSlope: 33.77806
+      time: -0.0038461538
+      value: 1.024369
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.013461539
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.49420166
-      value: 0.9952812
-      inSlope: -4.9473343
-      outSlope: 6.5517955
-      tangentMode: 1
+      time: 0.08074507
+      value: 0.03485298
+      inSlope: 2.9057808
+      outSlope: 2.9057808
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.03846151
+      inWeight: 0.33333334
+      outWeight: 0.035140727
+    - serializedVersion: 3
+      time: 0.13964844
+      value: 0.9812622
+      inSlope: -10.931091
+      outSlope: -10.931091
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04866614
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -50,29 +64,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 261.73593
-      outSlope: 261.73593
-      tangentMode: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.07545617
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.013558524
-      value: 0.33017927
-      inSlope: 20.987625
-      outSlope: 212.73384
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.31182206
-      outWeight: 0.020044805
-    - serializedVersion: 3
-      time: 0.032892123
+      time: 1
       value: 0
-      inSlope: 244.19688
-      outSlope: 244.19688
-      tangentMode: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.038117032
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

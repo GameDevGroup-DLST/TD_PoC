@@ -4,7 +4,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [CustomEditor(typeof(SpellScriptableObject))]
-public class ConditionalSelectEditor : Editor
+public class SpellScriptableObjectEditor : Editor
 {
     bool showMovementOptions = true;
 	private SpellScriptableObject spellSO;
@@ -12,16 +12,24 @@ public class ConditionalSelectEditor : Editor
 	public override void OnInspectorGUI () {
 		// Unity provides a target when overriding the inspector look, and it has always the same type we declare on CustmoEditor(typeof()) on top
 		spellSO = (SpellScriptableObject)target;
+        BuildMetaSettings();
+        BuildDamageSettings();
+        BuildMovementSettings();
+        BuildLifetimeSettings();
+	}
 
+    private void BuildMetaSettings() {
         EditorGUILayout.LabelField("Spell Metadata", EditorStyles.boldLabel);
         spellSO.SpellName = EditorGUILayout.TextField("Spell Name", spellSO.SpellName);
         spellSO.SpellThumbnail = (Sprite)EditorGUILayout.ObjectField("Spell Thumbnail", spellSO.SpellThumbnail, typeof(Sprite));
-
         spellSO.Projectile = (Spell)EditorGUILayout.ObjectField("Projectile Prefab", spellSO.Projectile, typeof(Spell));
         spellSO.ManaCost = EditorGUILayout.FloatField("Mana Cost", spellSO.ManaCost);
         spellSO.CastDelay = EditorGUILayout.FloatField("Cast Delay", spellSO.CastDelay);
 
         EditorGUILayout.Space();
+    }
+
+    private void BuildDamageSettings() {
         EditorGUILayout.LabelField("Damage", EditorStyles.boldLabel);
 
         spellSO.DamageAmount = EditorGUILayout.FloatField("Damage Amount", spellSO.DamageAmount);
@@ -35,6 +43,9 @@ public class ConditionalSelectEditor : Editor
         }
 
         EditorGUILayout.Space();
+    }
+
+    private void BuildMovementSettings() {
         EditorGUILayout.LabelField("Movement Options", EditorStyles.boldLabel);
 
         spellSO.MoveSpeed = EditorGUILayout.Slider("Move Speed", spellSO.MoveSpeed, 0f, 50f);
@@ -65,6 +76,9 @@ public class ConditionalSelectEditor : Editor
 		}
 
         EditorGUILayout.Space();
+    }
+
+    private void BuildLifetimeSettings() {
         EditorGUILayout.LabelField("Lifetime", EditorStyles.boldLabel);
 
         spellSO.DestroyOnHit = EditorGUILayout.Toggle("Destroy On Hit", spellSO.DestroyOnHit);
@@ -73,6 +87,8 @@ public class ConditionalSelectEditor : Editor
 		if(GUI.changed) {
             EditorUtility.SetDirty(target);
         }
-	}
+
+        EditorGUILayout.Space();
+    }
 
 }

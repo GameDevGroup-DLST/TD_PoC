@@ -14,10 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpellName: Firebolt
   Projectile: {fileID: 9127311818351621454, guid: cfe45fd91e142af42b59aac6ddd1fe52, type: 3}
-  DamageAmount: 20
+  SpellThumbnail: {fileID: 0}
   ManaCost: 10
+  CastDelay: 3
+  CastTarget: 0
+  DamageAmount: 20
   SpellRadius: 1
-  MoveSpeed: 35
+  OnHitEffects: 
+  OnKillEffects: 
+  MoveSpeed: 35.7
   MovementType: 1
   Period: 5
   xMovement:

@@ -115,7 +115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8772842376387413683
 Transform:
   m_ObjectHideFlags: 0
@@ -123,7 +123,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8772842376387413680}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 225.0808, y: 9.18, z: 225}
   m_LocalScale: {x: 3.8744328, y: 3.8744328, z: 3.8744328}
   m_ConstrainProportionsScale: 1
@@ -174,7 +174,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cf28e236655264e9511bacdf562a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellToCast: {fileID: 11400000, guid: 9991f55a29373cc40b6264196a255ad2, type: 2}
+  activeSpellIndex: 0
+  spells:
+  - {fileID: 11400000, guid: b5d89d8bb567f8f4e91e07f447712600, type: 2}
+  - {fileID: 11400000, guid: 9991f55a29373cc40b6264196a255ad2, type: 2}
+  - {fileID: 11400000, guid: f8208af36b2c9f74690951d987df3e5c, type: 2}
   castPoint: {fileID: 8772842377138635858}
 --- !u!1 &8772842377138635859
 GameObject:

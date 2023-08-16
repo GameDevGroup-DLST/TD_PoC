@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56562beab6fe11e418bc46ad410be780, type: 3}
   m_Name: BubbleBlast
   m_EditorClassIdentifier: 
-  SpellName: BubbleBlast
+  SpellName: Bubble Blast
   Projectile: {fileID: 9127311818351621454, guid: 095fe036a4dfec0489f8503331f7a221, type: 3}
-  DamageAmount: 5
+  SpellThumbnail: {fileID: 0}
   ManaCost: 2
+  CastDelay: 3
+  CastTarget: 0
+  DamageAmount: 5
   SpellRadius: 0.5
+  OnHitEffects: 
+  OnKillEffects: 
   MoveSpeed: 12.5
   MovementType: 2
   Period: 12
