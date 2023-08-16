@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Caravan
   m_EditorClassIdentifier: 
   nameString: Caravan
-  prefab: {fileID: 7455039699082266831, guid: 5c92fe8238326ce48983e3fef60f56b8, type: 3}
-  visual: {fileID: 7455039699082266831, guid: 5c92fe8238326ce48983e3fef60f56b8, type: 3}
+  prefab: {fileID: 7455039699082266831, guid: 4c2ae79fa00c0eb4c8845209db5682c9, type: 3}
+  visual: {fileID: 7455039699082266831, guid: 9398d78f5c1d8e44eb7e3445be4acc66, type: 3}
   width: 1
   height: 1

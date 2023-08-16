@@ -7,7 +7,8 @@ public class TowerGrid : Singleton<TowerGrid>
 {
     public TowerTypeScriptableObject[] availableTowers = new TowerTypeScriptableObject[1];
     [SerializeField] TowerTypeScriptableObject caravanTowerSO;
-    private TowerTypeScriptableObject towerTypeSO;
+    [SerializeField] TowerTypeScriptableObject defaultTileSO;
+    private TowerTypeScriptableObject currentlySelectedTowerTypeSO;
     private int activeIndex = 0;
 
     private GridXZ<TowerGridObject> grid;
@@ -19,13 +20,13 @@ public class TowerGrid : Singleton<TowerGrid>
     [SerializeField] private float cellSize = 10f;
     [SerializeField] private LayerMask mouseColliderLayerMask;
 
-    public delegate void TowerChangeAction();
+    public delegate void TowerChangeAction(TowerTypeScriptableObject newTower);
     public static event TowerChangeAction OnTowerChanged;
 
     override protected void Awake() {
         base.Awake();
         
-        towerTypeSO = availableTowers[activeIndex];
+        currentlySelectedTowerTypeSO = availableTowers[activeIndex];
         
         grid = new GridXZ<TowerGridObject>(
             gridWidth,
@@ -38,40 +39,60 @@ public class TowerGrid : Singleton<TowerGrid>
     }
 
     private void Start() {
-        CreateTower(caravanTowerSO, gridHeight/2, gridWidth/2);
+        InitializeGrid();
+        OnTowerChanged?.Invoke(currentlySelectedTowerTypeSO);
     }
 
     void Update()
     {
+        if(GameManager.Instance.State != GameState.Gameplay || PlayPhaseManager.Instance.Phase != PlayPhase.Planning) return;
+
+
         if (Input.GetMouseButtonDown(0)) {
-            CreateTower(towerTypeSO);
+            CreateTower(currentlySelectedTowerTypeSO);
         }
         if (Input.GetMouseButtonDown(1)) {
             DestroyTower();
         }
-        // if (Input.GetKeyDown(KeyCode.E)) { // Need to figure how to rotate at object center, not at pivot point
-        //     RotateTower();
-        // }
-        // if (Input.GetKeyDown(KeyCode.Q)) {
-        //     RotateTower(true);
-        // }
-        if(Input.GetKeyDown(KeyCode.UpArrow)) {
+        if(Input.GetKeyDown(KeyCode.Q)) {
             activeIndex = (activeIndex + 1) % availableTowers.Length;
-            towerTypeSO = availableTowers[activeIndex];
+            currentlySelectedTowerTypeSO = availableTowers[activeIndex];
 
-            OnTowerChanged?.Invoke();
-        } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            OnTowerChanged?.Invoke(currentlySelectedTowerTypeSO);
+        } else if (Input.GetKeyDown(KeyCode.E)) {
             activeIndex = activeIndex - 1;
 
             activeIndex = activeIndex >= 0 ? activeIndex : (availableTowers.Length - 1);
-            towerTypeSO = availableTowers[activeIndex];
+            currentlySelectedTowerTypeSO = availableTowers[activeIndex];
 
-            OnTowerChanged?.Invoke();
+            OnTowerChanged?.Invoke(currentlySelectedTowerTypeSO);
         }
     }
 
+    private void InitializeGrid() {
+        int midX = gridHeight/2;
+        int midZ = gridWidth/2;
+
+        for(int x = midX - 5; x <= midX + 5; x++) {
+            for(int z = midZ - 5; z <= midZ + 5; z++) {
+                if(x == midX && z == midZ) {
+                    continue;
+                }
+
+                if(x%2 == 1 && z%2 == 1) {
+                    CreateTower(defaultTileSO, x, z);
+                }
+            }
+        }
+
+        CreateTower(caravanTowerSO, gridHeight/2, gridWidth/2);
+        Vector3 caravanWorldPosition = grid.GetWorldPosition(gridHeight/2, gridWidth/2);
+
+        Camera.main.transform.position = Camera.main.transform.position + new Vector3(caravanWorldPosition.x - 60f, 0, caravanWorldPosition.z - 60f);
+    }
+
     private void CreateTower(TowerTypeScriptableObject towerType) {
-        Vector3 mousePosition = GetMouseWorldPosition();
+        Vector3 mousePosition = GetMouseWorldPosition(); // Change this to be a ray cast from the camera to the world position
         grid.GetXZ(mousePosition, out int x, out int z);
 
         List<Vector2Int> gridPositionList = GetGridPositionListAtMousePosition();
@@ -99,10 +120,10 @@ public class TowerGrid : Singleton<TowerGrid>
         }
     }
 
-        private void CreateTower(TowerTypeScriptableObject towerType, int x, int z) {
-        List<Vector2Int> gridPositionList = towerTypeSO.GetGridPositionList(new Vector2Int(x,z), _dir);
+    private void CreateTower(TowerTypeScriptableObject towerType, int x, int z) {
+        List<Vector2Int> gridPositionList = currentlySelectedTowerTypeSO.GetGridPositionList(new Vector2Int(x,z), _dir);
 
-        if(CanBuildInArea(gridPositionList)) {
+        if(CanBuildInArea(gridPositionList, true)) {
             Vector2Int rotationOffset = towerType.GetRotationOffset(_dir);
             Vector3 towerObjectWorldPosition = grid.GetWorldPosition(x, z) +
                 new Vector3(rotationOffset.x, 0, rotationOffset.y) * grid.GetCellSize();
@@ -110,6 +131,7 @@ public class TowerGrid : Singleton<TowerGrid>
             Tower tower = Tower.Create(towerObjectWorldPosition, new Vector2Int(x,z), _dir, towerType);
 
             foreach(Vector2Int gridPosition in gridPositionList) {
+                grid.GetGridObject(gridPosition.x, gridPosition.y).GetTower()?.DestroySelf(); // for sanity reasons
                 grid.GetGridObject(gridPosition.x, gridPosition.y).SetTower(tower);
             }
         } else {
@@ -128,14 +150,31 @@ public class TowerGrid : Singleton<TowerGrid>
     private void DestroyTower() {
         TowerGridObject gridObject = grid.GetGridObject(GetMouseWorldPosition());
         Tower tower = gridObject.GetTower();
-        if (tower != null) {
+        if (tower != null && tower.CanBeDestroyed()) {
+            List<Vector2Int> gridPositionList = tower.GetGridPositionList();
+            
             tower.DestroySelf();
             
-            List<Vector2Int> gridPositionList = tower.GetGridPositionList();
-
             foreach(Vector2Int gridPosition in gridPositionList) {
-                grid.GetGridObject(gridPosition.x, gridPosition.y).ClearTower();
+                Vector2Int rotationOffset = defaultTileSO.GetRotationOffset(_dir);
+
+                Vector3 towerObjectWorldPosition = grid.GetWorldPosition(gridPosition.x, gridPosition.y) +
+                new Vector3(rotationOffset.x, 0, rotationOffset.y) * grid.GetCellSize();
+
+                Tower empty = Tower.Create(towerObjectWorldPosition, new Vector2Int(gridPosition.x, gridPosition.y), _dir, defaultTileSO);
+                grid.GetGridObject(gridPosition.x, gridPosition.y).SetTower(empty);
             }
+        } else {
+            grid.GetXZ(GetMouseWorldPosition(), out int x, out int z);
+            CodeMonkey.Utils.UtilsClass.CreateWorldTextPopup(
+                null,
+                "Cannot Destroy Tile!",
+                grid.GetWorldPosition(x, z),
+                40,
+                Color.red,
+                grid.GetWorldPosition(x, z) + new Vector3(0, 20),
+                1f
+            );
         }
     }
 
@@ -157,8 +196,12 @@ public class TowerGrid : Singleton<TowerGrid>
         );
     }
 
-    private bool CanBuildInArea(List<Vector2Int> gridPositionList) {
+    private bool CanBuildInArea(List<Vector2Int> gridPositionList, bool allowNull = false) {
         foreach(Vector2Int gridPosition in gridPositionList) {
+            if(!allowNull && grid.GetGridObject(gridPosition.x, gridPosition.y).GetTower() == null) {
+                return false;
+            }
+            
             if (!grid.GetGridObject(gridPosition.x, gridPosition.y).CanBuild()) {
                 return false;
             }
@@ -169,7 +212,7 @@ public class TowerGrid : Singleton<TowerGrid>
 
     private List<Vector2Int> GetGridPositionListAtMousePosition() {
         grid.GetXZ(GetMouseWorldPosition(), out int x, out int z);
-        return towerTypeSO.GetGridPositionList(new Vector2Int(x,z), _dir);
+        return currentlySelectedTowerTypeSO.GetGridPositionList(new Vector2Int(x,z), _dir);
     }
 
     public Vector3 GetMouseWorldPosition() {
@@ -185,7 +228,7 @@ public class TowerGrid : Singleton<TowerGrid>
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 999f, mouseColliderLayerMask)) {
             grid.GetXZ(hit.point, out int x, out int z);
-            Vector2Int rotationOffset = towerTypeSO.GetRotationOffset(_dir);
+            Vector2Int rotationOffset = currentlySelectedTowerTypeSO.GetRotationOffset(_dir);
             return grid.GetWorldPosition(x, z) +
                 new Vector3(rotationOffset.x, 0, rotationOffset.y) * grid.GetCellSize();
         } else {
@@ -194,10 +237,10 @@ public class TowerGrid : Singleton<TowerGrid>
     }
 
     public Quaternion GetTowerRotation() {
-        return Quaternion.Euler(0, towerTypeSO.GetRotationAngle(_dir), 0);
+        return Quaternion.Euler(0, currentlySelectedTowerTypeSO.GetRotationAngle(_dir), 0);
     }
 
-    public TowerTypeScriptableObject GetSelectedTowerSO() => towerTypeSO;
+    public TowerTypeScriptableObject GetSelectedTowerSO() => currentlySelectedTowerTypeSO;
 
     public abstract class GridObject<T> {
         protected GridXZ<T> _grid;
@@ -228,7 +271,7 @@ public class TowerGrid : Singleton<TowerGrid>
             _z = z;
         }
 
-        public bool CanBuild() => _tower == null;
+        public bool CanBuild() => _tower == null || _tower.CanBeOverridden();
 
         public Tower GetTower() => _tower;
 
