@@ -36,6 +36,8 @@ public class SpellScriptableObject : ScriptableObject {
     // ----------------------------- END MOVEMENT ---------
 
     // LIFETIME -------------------------------------------
+    public LayerMask CollisionLayers;
+    public LayerMask DamagingLayers;
     public bool DestroyOnHit = true;
     public float Lifetime = 2f;
 }

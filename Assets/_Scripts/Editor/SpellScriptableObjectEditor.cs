@@ -81,6 +81,9 @@ public class SpellScriptableObjectEditor : Editor
     private void BuildLifetimeSettings() {
         EditorGUILayout.LabelField("Lifetime", EditorStyles.boldLabel);
 
+        spellSO.CollisionLayers = EditorGUILayout.MaskField(new GUIContent("Collision Layers", "What layers count as collisions."), spellSO.CollisionLayers, UnityEditorInternal.InternalEditorUtility.layers);
+        spellSO.DamagingLayers = EditorGUILayout.MaskField(new GUIContent("Damaging Layers", "What layers will this attempt to damage."), spellSO.DamagingLayers, UnityEditorInternal.InternalEditorUtility.layers);
+        
         spellSO.DestroyOnHit = EditorGUILayout.Toggle("Destroy On Hit", spellSO.DestroyOnHit);
         spellSO.Lifetime = EditorGUILayout.FloatField("Lifetime", spellSO.Lifetime);
 	

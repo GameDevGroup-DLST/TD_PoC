@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7455039699082266831}
   - component: {fileID: -3221083793610169382}
+  - component: {fileID: 5708266213382307036}
   m_Layer: 0
   m_Name: EmptyTile
   m_TagString: Untagged
@@ -48,6 +49,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canBeOverridden: 1
   _canBeDestroyed: 0
+  visual: {fileID: 7455039699705252979}
+  destroyedVisual: {fileID: 7455039699705252979}
+--- !u!114 &5708266213382307036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7455039699082266828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5341790f001dcbc40ae1cecb92ee5ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellToCast: {fileID: 0}
+  castPoint: {fileID: 0}
 --- !u!1 &7455039699705252979
 GameObject:
   m_ObjectHideFlags: 0

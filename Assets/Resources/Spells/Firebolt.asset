@@ -15,14 +15,14 @@ MonoBehaviour:
   SpellName: Firebolt
   Projectile: {fileID: 9127311818351621454, guid: cfe45fd91e142af42b59aac6ddd1fe52, type: 3}
   SpellThumbnail: {fileID: 0}
-  ManaCost: 10
-  CastDelay: 3
+  ManaCost: 15
+  CastDelay: 0.33
   CastTarget: 0
-  DamageAmount: 20
-  SpellRadius: 1
+  DamageAmount: 50
+  SpellRadius: 2
   OnHitEffects: 
   OnKillEffects: 
-  MoveSpeed: 35.7
+  MoveSpeed: 50
   MovementType: 1
   Period: 5
   xMovement:
@@ -37,5 +37,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CollisionLayers:
+    serializedVersion: 2
+    m_Bits: 72
+  DamagingLayers:
+    serializedVersion: 2
+    m_Bits: 64
   DestroyOnHit: 1
   Lifetime: 4

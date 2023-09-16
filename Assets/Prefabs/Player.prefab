@@ -115,7 +115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8772842376387413683
 Transform:
   m_ObjectHideFlags: 0
@@ -180,6 +180,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9991f55a29373cc40b6264196a255ad2, type: 2}
   - {fileID: 11400000, guid: f8208af36b2c9f74690951d987df3e5c, type: 2}
   castPoint: {fileID: 8772842377138635858}
+  mouseColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &8772842377138635859
 GameObject:
   m_ObjectHideFlags: 0

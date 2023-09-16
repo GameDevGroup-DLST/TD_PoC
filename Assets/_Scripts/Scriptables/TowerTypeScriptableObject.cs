@@ -23,6 +23,8 @@ public class TowerTypeScriptableObject : ScriptableObject
     public Transform visual;
     public int width;
     public int height;
+    public SpellScriptableObject spellToCast; // THIS NEEDS TO BE REPLACED WITH A TOWER SPELL SO
+    public float maxHealth = 100f;
 
     public int GetRotationAngle(Dir dir) {
         switch(dir) {

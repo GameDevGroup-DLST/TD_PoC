@@ -55,14 +55,27 @@ public class Spell : MonoBehaviour
         handleMovement?.Invoke(spellToCast, this);
     }
 
-    private void OnTriggerEnter(Collider other) {
-        // Apply Spell Effects
-        // Apply Hit Particles
-        // Apply Sound Effects
+    private void OnTriggerEnter(Collider other)
+    {
+        if(!((spellToCast.CollisionLayers & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) || other.isTrigger) {
+            return;
+        }
+
+        if ((spellToCast.DamagingLayers & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) {
+            other.GetComponent<IDamageable>()?.TakeDamage(spellToCast.DamageAmount);
+        }
+        OnHit(other);
 
         if(spellToCast.DestroyOnHit) {
-            Die();
+            Die(); // Might be better as a coroutine
         }
+    }
+
+    private void OnHit(Collider other)
+    {
+        // Spawn particles
+        // Spawn SFX
+        // Spawn AOE
     }
 
     private void Die()

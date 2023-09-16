@@ -17,3 +17,4 @@ MonoBehaviour:
   visual: {fileID: 7455039699082266831, guid: 396f10bbbc71c534c9bd599f1e893ef7, type: 3}
   width: 1
   height: 1
+  spellToCast: {fileID: 11400000, guid: 9991f55a29373cc40b6264196a255ad2, type: 2}

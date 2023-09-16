@@ -16,15 +16,15 @@ MonoBehaviour:
   Projectile: {fileID: 9127311818351621454, guid: 095fe036a4dfec0489f8503331f7a221, type: 3}
   SpellThumbnail: {fileID: 0}
   ManaCost: 2
-  CastDelay: 3
+  CastDelay: 0.1
   CastTarget: 0
   DamageAmount: 5
   SpellRadius: 0.5
   OnHitEffects: 
   OnKillEffects: 
-  MoveSpeed: 12.5
+  MoveSpeed: 20.6
   MovementType: 2
-  Period: 12
+  Period: 11.52
   xMovement:
     serializedVersion: 2
     m_Curve: []
@@ -37,5 +37,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  CollisionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  DamagingLayers:
+    serializedVersion: 2
+    m_Bits: 0
   DestroyOnHit: 1
   Lifetime: 20

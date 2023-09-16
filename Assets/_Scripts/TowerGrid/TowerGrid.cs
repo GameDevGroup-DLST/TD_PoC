@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TowerGrid : Singleton<TowerGrid>
@@ -240,6 +241,25 @@ public class TowerGrid : Singleton<TowerGrid>
         return Quaternion.Euler(0, currentlySelectedTowerTypeSO.GetRotationAngle(_dir), 0);
     }
 
+    public TowerGridObject GetTowerByName(string name, out int x, out int z) {
+        for(x = 0; x < grid.GetWidth() + 5; x++) {
+            for(z = 0; z < grid.GetHeight(); z++) {
+                TowerGridObject gridObject = grid.GetGridObject(x, z);
+                Tower tower = gridObject.GetTower();
+                if(tower != null && tower.GetTowerName() == name) {
+                    return gridObject;
+                }
+            }
+        }
+
+        x = z = -1;
+        return null;
+    }
+
+    public Vector3 GetGridPositionInWorld(int x, int z) {
+        return grid.GetWorldPosition(x, z);
+    }
+
     public TowerTypeScriptableObject GetSelectedTowerSO() => currentlySelectedTowerTypeSO;
 
     public abstract class GridObject<T> {
@@ -254,6 +274,10 @@ public class TowerGrid : Singleton<TowerGrid>
             _grid = grid;
             _x = x;
             _z = z;
+        }
+
+        public Vector3 GetWorldPosition() {
+            return _grid.GetWorldPosition(_x, _z);
         }
 
         public override string ToString()
